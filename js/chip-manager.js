@@ -1,23 +1,64 @@
 /**
  * Chip Manager - Virtual Currency System
- * Uses localStorage for persistence
+ * Uses localStorage with memory fallback for Discord iframe
  */
 
 const ChipManager = (function () {
   const STORAGE_KEY = "arcade_chips";
   const INITIAL_BALANCE = 10000;
+  
+  // Memory fallback for when localStorage is blocked (Discord iframe)
+  let memoryBalance = null;
+  let useMemoryFallback = false;
+
+  /**
+   * Check if localStorage is available
+   */
+  function isLocalStorageAvailable() {
+    try {
+      const testKey = '__test__';
+      localStorage.setItem(testKey, testKey);
+      localStorage.removeItem(testKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Initialize storage mode
+  if (!isLocalStorageAvailable()) {
+    console.warn('[ChipManager] localStorage unavailable, using memory fallback');
+    useMemoryFallback = true;
+    memoryBalance = INITIAL_BALANCE;
+  }
 
   /**
    * Get current chip balance
    * @returns {number}
    */
   function getBalance() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === null) {
-      setBalance(INITIAL_BALANCE);
-      return INITIAL_BALANCE;
+    if (useMemoryFallback) {
+      if (memoryBalance === null) {
+        memoryBalance = INITIAL_BALANCE;
+      }
+      return memoryBalance;
     }
-    return parseInt(stored, 10);
+    
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === null) {
+        setBalance(INITIAL_BALANCE);
+        return INITIAL_BALANCE;
+      }
+      return parseInt(stored, 10);
+    } catch (e) {
+      // Fallback to memory if localStorage fails
+      useMemoryFallback = true;
+      if (memoryBalance === null) {
+        memoryBalance = INITIAL_BALANCE;
+      }
+      return memoryBalance;
+    }
   }
 
   /**
@@ -26,7 +67,18 @@ const ChipManager = (function () {
    */
   function setBalance(amount) {
     const value = Math.max(0, Math.floor(amount));
-    localStorage.setItem(STORAGE_KEY, value.toString());
+    
+    if (useMemoryFallback) {
+      memoryBalance = value;
+    } else {
+      try {
+        localStorage.setItem(STORAGE_KEY, value.toString());
+      } catch (e) {
+        useMemoryFallback = true;
+        memoryBalance = value;
+      }
+    }
+    
     dispatchBalanceChange(value);
     return value;
   }
@@ -93,6 +145,14 @@ const ChipManager = (function () {
     return amount.toLocaleString();
   }
 
+  /**
+   * Check if using memory fallback
+   * @returns {boolean}
+   */
+  function isUsingMemoryFallback() {
+    return useMemoryFallback;
+  }
+
   // Public API
   return {
     getBalance,
@@ -102,6 +162,7 @@ const ChipManager = (function () {
     reset,
     canAfford,
     format,
+    isUsingMemoryFallback,
     INITIAL_BALANCE,
   };
 })();
