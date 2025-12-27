@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Plinko - Arcade Games</title>
+  <meta name="description" content="Plinko 彈珠遊戲 - 放下彈珠看它彈跳！">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  
+  <!-- Matter.js Physics Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="plinko.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <a href="../../index.html" class="header__logo">
+        ← 返回大廳
+      </a>
+      <div class="chip-balance">
+        <span class="chip-balance__icon">🪙</span>
+        <span class="chip-balance__amount chip-display">0</span>
+      </div>
+    </header>
+    
+    <!-- Game Area -->
+    <main class="plinko-container">
+      <div class="plinko-header">
+        <h1 class="plinko-title">🎯 Plinko</h1>
+      </div>
+      
+      <div class="plinko-layout">
+        <!-- Betting Panel -->
+        <aside class="betting-panel">
+          <div class="betting-section">
+            <label class="betting-label">下注金額</label>
+            <div class="bet-input-group">
+              <button class="bet-adjust" onclick="adjustBet(-100)">-</button>
+              <input type="number" id="betAmount" class="bet-input" value="100" min="10" max="10000" step="10">
+              <button class="bet-adjust" onclick="adjustBet(100)">+</button>
+            </div>
+            <div class="bet-presets">
+              <button class="bet-preset" onclick="setBet(50)">50</button>
+              <button class="bet-preset" onclick="setBet(100)">100</button>
+              <button class="bet-preset" onclick="setBet(500)">500</button>
+              <button class="bet-preset" onclick="setBet(1000)">1K</button>
+            </div>
+          </div>
+          
+          <button id="dropBtn" class="btn btn--gold drop-btn" onclick="dropBall()">
+            🎯 放下彈珠
+          </button>
+          
+          <div class="result-display" id="resultDisplay">
+            <div class="result-label">上次結果</div>
+            <div class="result-multiplier" id="lastMultiplier">-</div>
+            <div class="result-amount" id="lastWin">等待遊戲...</div>
+          </div>
+        </aside>
+        
+        <!-- Canvas Game Area -->
+        <div class="plinko-board">
+          <canvas id="plinkoCanvas"></canvas>
+          <div class="multiplier-row" id="multiplierRow"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="../../js/chip-manager.js"></script>
+  <script src="../../js/discord-sdk.js"></script>
+  <script src="plinko.js"></script>
+</body>
+</html>

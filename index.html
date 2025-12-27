@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎰 Arcade Games</title>
+    <meta
+      name="description"
+      content="Discord Activity 遊戲平台 - 在 Discord 內玩各種刺激的賭場遊戲！"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <style>
+      .hero {
+        text-align: center;
+        padding: var(--space-2xl) 0;
+      }
+
+      .hero__title {
+        font-size: 3rem;
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero__subtitle {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        max-width: 500px;
+        margin: 0 auto var(--space-xl);
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      .section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(139, 92, 246, 0.3),
+          transparent
+        );
+      }
+
+      .coming-soon {
+        position: absolute;
+        top: var(--space-md);
+        right: var(--space-md);
+        background: rgba(100, 116, 139, 0.8);
+        color: white;
+        font-size: 0.75rem;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-full);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .game-card--disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .game-card--disabled:hover {
+        transform: none;
+        border-color: rgba(139, 92, 246, 0.2);
+        box-shadow: none;
+      }
+
+      .footer {
+        text-align: center;
+        padding: var(--space-xl) 0;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.1);
+        margin-top: var(--space-2xl);
+      }
+
+      .reset-btn {
+        font-size: 0.875rem;
+        padding: var(--space-xs) var(--space-sm);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <a href="index.html" class="header__logo"> 🎰 Arcade Games </a>
+        <div class="chip-balance">
+          <span class="chip-balance__icon">🪙</span>
+          <span class="chip-balance__amount chip-display">0</span>
+          <button
+            class="btn btn--ghost reset-btn"
+            onclick="resetChips()"
+            title="重置籌碼"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="hero">
+        <h1 class="hero__title">
+          <span class="text-gradient">遊戲大廳</span> 🎮
+        </h1>
+        <p class="hero__subtitle">
+          選擇一個遊戲開始你的冒險！使用虛擬籌碼，純粹娛樂用途。
+        </p>
+      </section>
+
+      <!-- Games Section -->
+      <section>
+        <h2 class="section-title">🎲 可用遊戲</h2>
+        <div class="game-grid">
+          <!-- Plinko -->
+          <a href="games/plinko/index.html" class="game-card">
+            <div class="game-card__image">🎯</div>
+            <div class="game-card__content">
+              <h3 class="game-card__title">Plinko</h3>
+              <p class="game-card__description">
+                放下彈珠，看它彈跳穿過釘子，最高可贏 10 倍！
+              </p>
+            </div>
+          </a>
+
+          <!-- Coming Soon: Mines -->
+          <div class="game-card game-card--disabled">
+            <span class="coming-soon">即將推出</span>
+            <div class="game-card__image">💎</div>
+            <div class="game-card__content">
+              <h3 class="game-card__title">Mines</h3>
+              <p class="game-card__description">
+                在地雷陣中挖掘寶石，越深入獎勵越高！
+              </p>
+            </div>
+          </div>
+
+          <!-- Coming Soon: Slots -->
+          <div class="game-card game-card--disabled">
+            <span class="coming-soon">即將推出</span>
+            <div class="game-card__image">🎰</div>
+            <div class="game-card__content">
+              <h3 class="game-card__title">Slots</h3>
+              <p class="game-card__description">經典老虎機，三個一樣就中獎！</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>🎲 純娛樂用途 • 虛擬籌碼 • 不涉及真實金錢</p>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/chip-manager.js"></script>
+    <script src="js/discord-sdk.js"></script>
+    <script>
+      function resetChips() {
+        if (confirm("確定要重置籌碼到 10,000 嗎？")) {
+          ChipManager.reset();
+        }
+      }
+
+      // Initialize Discord SDK (optional)
+      // DiscordSDKWrapper.init('YOUR_CLIENT_ID');
+    </script>
+  </body>
+</html>

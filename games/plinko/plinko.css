@@ -1,0 +1,252 @@
+/* ===========================================
+   Plinko Game Styles
+   =========================================== */
+
+.plinko-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.plinko-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.plinko-title {
+  font-size: 2rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.plinko-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-lg);
+}
+
+/* Betting Panel */
+.betting-panel {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.betting-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.betting-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bet-input-group {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.bet-input {
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.bet-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.bet-adjust {
+  width: 36px;
+  height: 36px;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bet-adjust:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.bet-presets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xs);
+}
+
+.bet-preset {
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--bg-secondary);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bet-preset:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.drop-btn {
+  width: 100%;
+  padding: var(--space-md);
+  font-size: 1rem;
+}
+
+.drop-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Result Display */
+.result-display {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.result-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+}
+
+.result-multiplier {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-warning);
+}
+
+.result-amount {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.result-amount.win {
+  color: var(--accent-success);
+}
+
+.result-amount.lose {
+  color: var(--accent-danger);
+}
+
+/* Plinko Board */
+.plinko-board {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  overflow: hidden;
+}
+
+#plinkoCanvas {
+  display: block;
+  width: 100%;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+}
+
+/* Multiplier Row */
+.multiplier-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-sm);
+  background: var(--bg-secondary);
+}
+
+.multiplier-bucket {
+  flex: 1;
+  max-width: 50px;
+  padding: var(--space-xs) var(--space-sm);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+/* Multiplier color grades */
+.multiplier-bucket.tier-1 { background: #ef4444; color: white; } /* 10x */
+.multiplier-bucket.tier-2 { background: #f97316; color: white; } /* 3x */
+.multiplier-bucket.tier-3 { background: #eab308; color: #1a1a25; } /* 1.5x */
+.multiplier-bucket.tier-4 { background: #84cc16; color: #1a1a25; } /* 1x */
+.multiplier-bucket.tier-5 { background: #22c55e; color: #1a1a25; } /* 0.5x */
+.multiplier-bucket.tier-6 { background: #14b8a6; color: #1a1a25; } /* 0.3x */
+
+.multiplier-bucket.active {
+  transform: scale(1.15);
+  box-shadow: 0 0 20px currentColor;
+  z-index: 10;
+}
+
+/* Animations */
+@keyframes bucket-glow {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 20px currentColor; }
+}
+
+.multiplier-bucket.highlight {
+  animation: bucket-glow 0.5s ease-out;
+}
+
+/* Win celebration */
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.result-display.celebrate {
+  animation: celebrate 0.6s ease-out;
+  box-shadow: var(--glow-gold);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .plinko-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .betting-panel {
+    order: 2;
+  }
+  
+  .plinko-board {
+    order: 1;
+  }
+}
